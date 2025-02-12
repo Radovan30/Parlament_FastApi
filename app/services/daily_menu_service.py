@@ -18,12 +18,11 @@ def add_daily_menu(date, soup, meal_1, meal_1_price, meal_2, meal_2_price, meal_
     db.refresh(menu)
     return menu
 
-
-# ✅ Získání denního menu podle data
+# Získání denního menu podle data
 def get_daily_menu_by_date(date, db: Session):
     return db.query(DailyMenu).filter(DailyMenu.date == date).first()
 
-# ✅ Smazání denního menu
+# Smazání denního menu
 def delete_daily_menu(menu_id, db: Session):
     menu = db.query(DailyMenu).filter(DailyMenu.id == menu_id).first()
     if menu:
@@ -32,6 +31,6 @@ def delete_daily_menu(menu_id, db: Session):
         return True
     return False
 
-# ✅ Získání celého denního menu
+# Získání celého denního menu
 def get_all_menus(db: Session):
     return db.query(DailyMenu).all()

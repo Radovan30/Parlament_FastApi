@@ -77,3 +77,114 @@ VALUES
     -- Teplé nápoje
     ('Espresso', 8, 9, 0.07, 25.00, 'Káva Grande Cuvée'),
     ('Čaj "DILMAH"', 8, 10, 0.3, 31.00, 'S citronem a medem');
+
+
+-- Přidání categorii jídel
+INSERT INTO food_categories (name) VALUES
+    ('Polévky'),
+    ('Pochoutky k pivu'),
+    ('Salónková nabídka'),
+    ('Bezmasá jídla'),
+    ('Jídla z ryb');
+
+
+-- Přidání jídel
+INSERT INTO foods (food_name, category_id, weight, price, description) VALUES
+    -- Polévky
+    ('Slezská česnečka s vejcem, sýrem a krutony', 1, 0.33, 44.00, 'Sýrová polévka s česnekem a vejcem'),
+    ('Masový vývar s játrovými knedlíčky a nudlemi', 1, 0.33, 44.00, 'Vývar s játrovými knedlíčky a domácími nudlemi'),
+    ('Polévka dle denní nabídky', 1, 0.33, 33.00, 'Speciální polévka dle denní nabídky'),
+
+    -- Pochoutky k pivu
+    ('Nakládaný hermelín s feferonkou, chléb', 2, 1.00, 78.00, 'Nakládaný hermelín s feferonkou a chlebem'),
+    ('Tvarůžkový talíř, máslo, cibule, chléb', 2, 0.10, 78.00, 'Tvarůžky s máslem, cibulí a chlebem'),
+    ('Utopence s cibulí, chléb', 2, 1.00, 66.00, 'Utopence s cibulí a chlebem'),
+
+    -- Salónková nabídka
+    ('Těstovinový salát', 3, 1.00, 190.00, 'Salát s těstovinami a zeleninou'),
+    ('Ovocná mísa', 3, 1.00, 180.00, 'Mísa čerstvého ovoce'),
+    ('Zeleninová mísa', 3, 1.00, 180.00, 'Mísa čerstvé zeleniny'),
+    ('Salámová mísa (4 druhy salámů s přízdobou)', 3, 1.00, 490.00, 'Výběr salámů s přízdobou'),
+    ('Sýrová mísa (4 druhy sýrů s přízdobou)', 3, 1.00, 540.00, 'Sýrová mísa se 4 druhy sýrů'),
+    ('Řízková mísa (vepřové a kuřecí s přízdobou)', 3, 1.00, 420.00, 'Řízky s přízdobou'),
+    ('Kuřecí pečené špalíčky (s přízdobou)', 3, 1.00, 225.00, 'Pečené kuřecí špalíčky'),
+    ('Marinovaná pečená vepřová kýta (cca 6 kg)', 3, 1.00, 280.00, 'Marinovaná kýta'),
+    ('Tatarský biftek (hovězí svíčková)', 3, 1.00, 1100.00, 'Tatarský biftek z hovězí svíčkové'),
+
+    -- Bezmasá jídla
+    ('Smažený sýr, hranolky', 4, 0.15, 145.00, 'Smažený sýr s hranolky'),
+    ('Smažený hermelín, hranolky', 4, 0.12, 156.00, 'Smažený hermelín s hranolky'),
+    ('Smažené tvarůžky, hranolky', 4, 0.10, 156.00, 'Smažené tvarůžky s hranolky'),
+    ('Smažené žampiony, hranolky', 4, 0.15, 145.00, 'Smažené žampiony s hranolky'),
+    ('Hermelín na bramborovém placku', 4, 0.30, 156.00, 'Hermelín na bramborové placce'),
+    ('Zeleninové rizoto sypané sýrem', 4, 0.30, 119.00, 'Zeleninové rizoto se sýrem'),
+    ('Halušky s bryndzou a smaženou cibulkou', 4, 0.30, 129.00, 'Halušky s bryndzou'),
+
+    -- Jídla z ryb
+    ('Rybí filé na másle, vařené brambory', 5, 0.20, 189.00, 'Rybí filé s máslem a brambory'),
+    ('Smažené rybí filé, vařené brambory', 5, 0.20, 189.00, 'Smažené rybí filé s brambory'),
+    ('Přírodní rybí filé na grilu se zeleninou, vařené brambory', 5, 0.20, 189.00, 'Grilované rybí filé s brambory');
+
+
+-- Přidání allergenů
+INSERT INTO allergens (code, name) VALUES
+    (1, 'Lepek'),
+    (3, 'Vejce'),
+    (7, 'Mléko'),
+    (9, 'Celer'),
+    (10, 'Hořčice'),
+    (12, 'Oxid siřičitý a siřičitany');
+
+
+-- Polévky
+INSERT INTO food_allergens (food_id, allergen_id) VALUES
+    (1, 1),   -- Slezská česnečka (Lepek)
+    (1, 2),   -- Slezská česnečka (Vejce)
+    (1, 3),   -- Slezská česnečka (Mléko)
+    (2, 1),   -- Masový vývar (Lepek)
+    (2, 2),   -- Masový vývar (Vejce)
+    (3, 1);   -- Polévka dle denní nabídky (Lepek - závisí na nabídce)
+
+-- Pochoutky k pivu
+INSERT INTO food_allergens (food_id, allergen_id) VALUES
+    (4, 3),   -- Nakládaný hermelín (Mléko)
+    (5, 3),   -- Tvarůžkový talíř (Mléko)
+    (6, 1);   -- Utopence (Lepek)
+
+-- Salónková nabídka
+INSERT INTO food_allergens (food_id, allergen_id) VALUES
+    (7, 1),   -- Těstovinový salát (Lepek)
+    (7, 2),   -- Těstovinový salát (Vejce)
+    (10, 1),  -- Salámová mísa (Lepek)
+    (10, 6),  -- Salámová mísa (Oxid siřičitý)
+    (11, 3),  -- Sýrová mísa (Mléko)
+    (12, 1),  -- Řízková mísa (Lepek)
+    (12, 2),  -- Řízková mísa (Vejce)
+    (13, 1),  -- Kuřecí pečené špalíčky (Lepek)
+    (14, 1),  -- Marinovaná kýta (Lepek)
+    (15, 1),  -- Tatarský biftek (Lepek)
+    (15, 2);  -- Tatarský biftek (Vejce)
+
+-- Bezmasá jídla
+INSERT INTO food_allergens (food_id, allergen_id) VALUES
+    (16, 1),  -- Smažený sýr (Lepek)
+    (16, 3),  -- Smažený sýr (Mléko)
+    (17, 1),  -- Smažený hermelín (Lepek)
+    (17, 2),  -- Smažený hermelín (Vejce)
+    (17, 3),  -- Smažený hermelín (Mléko)
+    (18, 1),  -- Smažené tvarůžky (Lepek)
+    (18, 3),  -- Smažené tvarůžky (Mléko)
+    (19, 1),  -- Smažené žampiony (Lepek)
+    (19, 2),  -- Smažené žampiony (Vejce)
+    (20, 3),  -- Hermelín na bramborovém placku (Mléko)
+    (21, 1),  -- Zeleninové rizoto (Lepek)
+    (21, 3),  -- Zeleninové rizoto (Mléko)
+    (22, 1),  -- Halušky s bryndzou (Lepek)
+    (22, 3);  -- Halušky s bryndzou (Mléko)
+
+-- Jídla z ryb
+INSERT INTO food_allergens (food_id, allergen_id) VALUES
+    (23, 4),  -- Rybí filé na másle (Celer)
+    (23, 3),  -- Rybí filé na másle (Mléko)
+    (24, 4),  -- Smažené rybí filé (Celer)
+    (25, 4);  -- Přírodní rybí filé na grilu (Celer)
