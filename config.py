@@ -1,4 +1,6 @@
 import os
+import secrets
+
 from dotenv import load_dotenv
 
 load_dotenv()  # Načte proměnné z .env
@@ -9,6 +11,12 @@ MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
 MYSQL_HOST = os.getenv("MYSQL_HOST")
 MYSQL_DB = os.getenv("MYSQL_DB")
 SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    SECRET_KEY = secrets.token_hex(32)  # Vygeneruje nový bezpečný klíč
+    with open(".env", "a") as env_file:  # Přidá ho do `.env` souboru
+        env_file.write(f"\nSECRET_KEY={SECRET_KEY}\n")
+    print("✅ Vygenerován nový SECRET_KEY a uložen do .env")
 
 # Ověření, že všechny proměnné jsou nastavené
 if not all([MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DB, SECRET_KEY]):

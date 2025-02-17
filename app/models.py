@@ -1,13 +1,6 @@
-from sqlalchemy import Column, Integer, String, DECIMAL, Date, ForeignKey, Text
-from sqlalchemy.orm import declarative_base, sessionmaker, relationship
-from sqlalchemy import create_engine
-from config import DATABASE_URL
-
-
-
-Base = declarative_base()
-engine = create_engine(DATABASE_URL, echo=False)
-SessionLocal = sessionmaker(bind=engine, autoflush=False)
+from sqlalchemy import Column, Integer, String, Boolean, DECIMAL, Date, ForeignKey, Text
+from sqlalchemy.orm import relationship
+from db.database import Base, SessionLocal
 
 
 
@@ -58,7 +51,7 @@ class DrinkTypes(Base):
     drinks = relationship("Drinks", back_populates="drink_type")
 
 # Model pro nápoje
-class Drinks(Base):  # ✅ Ujistěte se, že je to "Drinks", ne "Drink"
+class Drinks(Base):
     __tablename__ = "drinks"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -95,12 +88,16 @@ class Foods(Base):
     weight = Column(DECIMAL(5, 2), nullable=False)
     price = Column(DECIMAL(6, 2), nullable=False)
     description = Column(Text, nullable=True)
+    is_special = Column(Boolean, default=False, nullable=False)
+    image_url = Column(String, nullable=True)
 
     # Vztah ke kategorii jídel
     category = relationship("FoodCategory", back_populates="foods")
 
     # Vztah k alergenům (M:N vztah přes FoodAllergen)
     allergens = relationship("Allergen", secondary="food_allergens", back_populates="foods")
+
+
 
 # Tabulka alergenů
 class Allergen(Base):
@@ -113,13 +110,13 @@ class Allergen(Base):
     # Vztah k jídlům přes spojovací tabulku
     foods = relationship("Foods", secondary="food_allergens", back_populates="allergens")
 
+
 # Spojovací tabulka pro jídla a alergeny (M:N vztah)
 class FoodAllergen(Base):
     __tablename__ = 'food_allergens'
 
     food_id = Column(Integer, ForeignKey('foods.id'), primary_key=True)
     allergen_id = Column(Integer, ForeignKey('allergens.id'), primary_key=True)
-
 
 
 

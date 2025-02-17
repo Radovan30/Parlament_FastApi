@@ -88,6 +88,8 @@ def format_food_response(food):
         "weight": float(food.weight),
         "price": float(food.price),
         "description": food.description,
+        "is_special": food.is_special,
+        "image_url": food.image_url,
         "allergens": [{"code": allergen.code, "name": allergen.name} for allergen in food.allergens]
     }
 

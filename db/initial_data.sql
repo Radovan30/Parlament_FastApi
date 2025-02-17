@@ -1,6 +1,6 @@
 -- Přidání výchozího administrátora (heslo: "admin123", musíš hashovat ručně)
 INSERT INTO admin_users (username, password_hash)
-VALUES ('admin', '$2b$12$3bqcH9QHqfz8AeIVsU1FO.5zV1aCtOs3NQ.YzAVdRQ2G6mVJdwWxK');
+VALUES ('admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9');
 
 -- Přidání testovacího denního menu
 INSERT INTO daily_menu (date, soup, meal_1, meal_1_price, meal_2, meal_2_price, meal_3, meal_3_price)
@@ -88,42 +88,45 @@ INSERT INTO food_categories (name) VALUES
     ('Jídla z ryb');
 
 
--- Přidání jídel
-INSERT INTO foods (food_name, category_id, weight, price, description) VALUES
+-- Přidání jídel s is_special a image_url
+INSERT INTO foods (food_name, category_id, weight, price, description, is_special, image_url) VALUES
     -- Polévky
-    ('Slezská česnečka s vejcem, sýrem a krutony', 1, 0.33, 44.00, 'Sýrová polévka s česnekem a vejcem'),
-    ('Masový vývar s játrovými knedlíčky a nudlemi', 1, 0.33, 44.00, 'Vývar s játrovými knedlíčky a domácími nudlemi'),
-    ('Polévka dle denní nabídky', 1, 0.33, 33.00, 'Speciální polévka dle denní nabídky'),
+    ('Slezská česnečka s vejcem, sýrem a krutony', 1, 0.33, 44.00, 'Sýrová polévka s česnekem a vejcem', 0, NULL),
+    ('Masový vývar s játrovými knedlíčky a nudlemi', 1, 0.33, 44.00, 'Vývar s játrovými knedlíčky a domácími nudlemi', 0, NULL),
+    ('Polévka dle denní nabídky', 1, 0.33, 33.00, 'Speciální polévka dle denní nabídky', 0, NULL),
 
     -- Pochoutky k pivu
-    ('Nakládaný hermelín s feferonkou, chléb', 2, 1.00, 78.00, 'Nakládaný hermelín s feferonkou a chlebem'),
-    ('Tvarůžkový talíř, máslo, cibule, chléb', 2, 0.10, 78.00, 'Tvarůžky s máslem, cibulí a chlebem'),
-    ('Utopence s cibulí, chléb', 2, 1.00, 66.00, 'Utopence s cibulí a chlebem'),
+    ('Nakládaný hermelín s feferonkou, chléb', 2, 1.00, 78.00, 'Nakládaný hermelín s feferonkou a chlebem', 0, NULL),
+    ('Tvarůžkový talíř, máslo, cibule, chléb', 2, 0.10, 78.00, 'Tvarůžky s máslem, cibulí a chlebem', 0, NULL),
+    ('Utopence s cibulí, chléb', 2, 1.00, 66.00, 'Utopence s cibulí a chlebem', 0, NULL),
 
     -- Salónková nabídka
-    ('Těstovinový salát', 3, 1.00, 190.00, 'Salát s těstovinami a zeleninou'),
-    ('Ovocná mísa', 3, 1.00, 180.00, 'Mísa čerstvého ovoce'),
-    ('Zeleninová mísa', 3, 1.00, 180.00, 'Mísa čerstvé zeleniny'),
-    ('Salámová mísa (4 druhy salámů s přízdobou)', 3, 1.00, 490.00, 'Výběr salámů s přízdobou'),
-    ('Sýrová mísa (4 druhy sýrů s přízdobou)', 3, 1.00, 540.00, 'Sýrová mísa se 4 druhy sýrů'),
-    ('Řízková mísa (vepřové a kuřecí s přízdobou)', 3, 1.00, 420.00, 'Řízky s přízdobou'),
-    ('Kuřecí pečené špalíčky (s přízdobou)', 3, 1.00, 225.00, 'Pečené kuřecí špalíčky'),
-    ('Marinovaná pečená vepřová kýta (cca 6 kg)', 3, 1.00, 280.00, 'Marinovaná kýta'),
-    ('Tatarský biftek (hovězí svíčková)', 3, 1.00, 1100.00, 'Tatarský biftek z hovězí svíčkové'),
+    ('Těstovinový salát', 3, 1.00, 190.00, 'Salát s těstovinami a zeleninou', 0, NULL),
+    ('Ovocná mísa', 3, 1.00, 180.00, 'Mísa čerstvého ovoce', 0, NULL),
+    ('Zeleninová mísa', 3, 1.00, 180.00, 'Mísa čerstvé zeleniny', 0, NULL),
+    ('Salámová mísa (4 druhy salámů s přízdobou)', 3, 1.00, 490.00, 'Výběr salámů s přízdobou', 0, NULL),
+    ('Sýrová mísa (4 druhy sýrů s přízdobou)', 3, 1.00, 540.00, 'Sýrová mísa se 4 druhy sýrů', 0, NULL),
+    ('Řízková mísa (vepřové a kuřecí s přízdobou)', 3, 1.00, 420.00, 'Řízky s přízdobou', 0, NULL),
+    ('Kuřecí pečené špalíčky (s přízdobou)', 3, 1.00, 225.00, 'Pečené kuřecí špalíčky', 0, NULL),
+    ('Marinovaná pečená vepřová kýta (cca 6 kg)', 3, 1.00, 280.00, 'Marinovaná kýta', 0, NULL),
+
+    -- Speciální jídlo: Tatarský biftek
+    ('Tatarský biftek (hovězí svíčková)', 3, 1.00, 1100.00, 'Tatarský biftek z hovězí svíčkové', 1, 'static/uploads/foods/rizek.jpg'),
 
     -- Bezmasá jídla
-    ('Smažený sýr, hranolky', 4, 0.15, 145.00, 'Smažený sýr s hranolky'),
-    ('Smažený hermelín, hranolky', 4, 0.12, 156.00, 'Smažený hermelín s hranolky'),
-    ('Smažené tvarůžky, hranolky', 4, 0.10, 156.00, 'Smažené tvarůžky s hranolky'),
-    ('Smažené žampiony, hranolky', 4, 0.15, 145.00, 'Smažené žampiony s hranolky'),
-    ('Hermelín na bramborovém placku', 4, 0.30, 156.00, 'Hermelín na bramborové placce'),
-    ('Zeleninové rizoto sypané sýrem', 4, 0.30, 119.00, 'Zeleninové rizoto se sýrem'),
-    ('Halušky s bryndzou a smaženou cibulkou', 4, 0.30, 129.00, 'Halušky s bryndzou'),
+    ('Smažený sýr, hranolky', 4, 0.15, 145.00, 'Smažený sýr s hranolky', 0, NULL),
+    ('Smažený hermelín, hranolky', 4, 0.12, 156.00, 'Smažený hermelín s hranolky', 0, NULL),
+    ('Smažené tvarůžky, hranolky', 4, 0.10, 156.00, 'Smažené tvarůžky s hranolky', 0, NULL),
+    ('Smažené žampiony, hranolky', 4, 0.15, 145.00, 'Smažené žampiony s hranolky', 0, NULL),
+    ('Hermelín na bramborovém placku', 4, 0.30, 156.00, 'Hermelín na bramborové placce', 0, NULL),
+    ('Zeleninové rizoto sypané sýrem', 4, 0.30, 119.00, 'Zeleninové rizoto se sýrem', 0, NULL),
+    ('Halušky s bryndzou a smaženou cibulkou', 4, 0.30, 129.00, 'Halušky s bryndzou', 0, NULL),
 
     -- Jídla z ryb
-    ('Rybí filé na másle, vařené brambory', 5, 0.20, 189.00, 'Rybí filé s máslem a brambory'),
-    ('Smažené rybí filé, vařené brambory', 5, 0.20, 189.00, 'Smažené rybí filé s brambory'),
-    ('Přírodní rybí filé na grilu se zeleninou, vařené brambory', 5, 0.20, 189.00, 'Grilované rybí filé s brambory');
+    ('Rybí filé na másle, vařené brambory', 5, 0.20, 189.00, 'Rybí filé s máslem a brambory', 0, NULL),
+    ('Smažené rybí filé, vařené brambory', 5, 0.20, 189.00, 'Smažené rybí filé s brambory', 0, NULL),
+    ('Přírodní rybí filé na grilu se zeleninou, vařené brambory', 5, 0.20, 189.00, 'Grilované rybí filé s brambory', 0, NULL);
+
 
 
 -- Přidání allergenů
