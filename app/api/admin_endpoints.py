@@ -53,7 +53,7 @@ def remove_daily_menu(menu_id: int, db: Session = Depends(get_db)):
 # CREATE
 #
 # 1. Vytvoření nové kategorie
-@router.post("/categories/create", response_model=CategoryResponse)
+@router.post("/categories", response_model=CategoryResponse)
 def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     new_category = Categories(name=category.name)
     db.add(new_category)
@@ -79,7 +79,7 @@ def create_drink(drink: DrinkCreate, db: Session = Depends(get_db)):
 
 
 # 3. Vytvoření nového typu nápoje
-@router.post("/drink-types/create", response_model=DrinkTypeCreate)
+@router.post("/drink-types", response_model=DrinkTypeCreate)
 def create_drink_type(drink_type: DrinkTypeCreate, db: Session = Depends(get_db)):
     new_drink_type = DrinkTypes(name=drink_type.name)
     db.add(new_drink_type)

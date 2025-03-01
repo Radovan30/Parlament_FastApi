@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.models import get_db
 from app.services.daily_menu_service import get_daily_menu_by_date, get_all_menus
 from app.services.drinks_service import Drinks, Categories, DrinkTypes
-from app.services.foods_service import Foods, FoodCategory
+from app.services.foods_service import Foods, FoodCategory, Allergen
 from datetime import date
 
 router = APIRouter()
@@ -124,3 +124,11 @@ def get_foods_by_category(category_id: int, db: Session = Depends(get_db)):
 
     foods = db.query(Foods).filter(Foods.category_id == category_id).all()
     return [format_food_response(food) for food in foods]
+
+# Endpoint pro získání všechny alergeny
+@router.get("/food-allergens/all")
+def get_all_food_allergens(db: Session = Depends(get_db)):
+    allergens = db.query(Allergen).all()
+    if not allergens:
+        raise HTTPException(status_code=404, detail="No categories found")
+    return [{"id": allergen.id,"code": allergen.code ,"name": allergen.name} for allergen in allergens]
