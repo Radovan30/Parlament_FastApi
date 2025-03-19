@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models import get_db
+from app.schemas_panel import PanelResponse
+from app.services import get_panel_by_id
 from app.services.daily_menu_service import get_daily_menu_by_date, get_all_menus
 from app.services.drinks_service import Drinks, Categories, DrinkTypes
 from app.services.foods_service import Foods, FoodCategory, Allergen
@@ -132,3 +134,14 @@ def get_all_food_allergens(db: Session = Depends(get_db)):
     if not allergens:
         raise HTTPException(status_code=404, detail="No categories found")
     return [{"id": allergen.id,"code": allergen.code ,"name": allergen.name} for allergen in allergens]
+
+
+#
+#   BOČNÍ PANEL
+#
+@router.get("/panel/{panel_id}", response_model=PanelResponse)
+def read_panel(panel_id: int, db: Session = Depends(get_db)):
+    panel = get_panel_by_id(panel_id, db)
+    if not panel:
+        raise HTTPException(status_code=404, detail="Panel not found")
+    return panel

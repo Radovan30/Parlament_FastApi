@@ -119,6 +119,19 @@ class FoodAllergen(Base):
     allergen_id = Column(Integer, ForeignKey('allergens.id'), primary_key=True)
 
 
+# Tabulka panel
+class Panel(Base):
+    __tablename__ = "panels"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(255), nullable=False, index=True)
+    description1 = Column(String, nullable=True)
+    description2 = Column(String, nullable=True)
+    date_start = Column(Date, nullable=True)
+    date_end = Column(Date, nullable=True)
+    visible = Column(Boolean, default=True)
+
+
 
 def get_db():
     """ Dependency FastAPI pro získání DB session """

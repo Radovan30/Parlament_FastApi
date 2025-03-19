@@ -1,9 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models import get_db, Categories, DrinkTypes, Drinks
+from app.schemas_panel import PanelResponse, PanelUpdate
 from app.services.daily_menu_service import add_daily_menu, delete_daily_menu
 from pydantic import BaseModel
 from datetime import date
+
+from app.services.panel_service import get_panel_by_id, update_panel
 from app.utils.auth import verify_admin
 from app.schemas_drink import CategoryCreate, DrinkTypeCreate, DrinkCreate, DrinkTypeResponse, CategoryResponse, DrinkUpdate, DrinkResponse
 
@@ -186,3 +189,15 @@ def delete_drink_type(drink_type_id: int, db: Session = Depends(get_db)):
     db.delete(drink_type)
     db.commit()
     return {"message": "Typ nápoje smazán"}
+
+
+
+#
+#   BOČNÍ PANEL
+#
+@router.put("/panel/{panel_id}", response_model=PanelResponse)
+def update_panel_endpoint(panel_id: int, panel_data: PanelUpdate, db: Session = Depends(get_db)):
+    updated_panel = update_panel(panel_id, panel_data, db)
+    if not updated_panel:
+        raise HTTPException(status_code=404, detail="Panel not found")
+    return updated_panel

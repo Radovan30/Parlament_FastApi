@@ -84,3 +84,13 @@ CREATE TABLE food_allergens (
     FOREIGN KEY (food_id) REFERENCES foods(id) ON DELETE CASCADE,
     FOREIGN KEY (allergen_id) REFERENCES allergens(id) ON DELETE CASCADE
 );
+
+CREATE TABLE panels (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NULL,
+    description1 TEXT NULL,
+    description2 TEXT NULL,
+    date_start DATE NULL,
+    date_end DATE NULL,
+    visible BOOLEAN
+);
